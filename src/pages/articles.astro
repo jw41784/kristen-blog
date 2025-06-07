@@ -25,14 +25,14 @@ const allTags = [...new Set(articles.flatMap(article => article.data.tags))].sor
       <h2 class="text-sm font-semibold text-zinc-600 dark:text-zinc-400 mb-3">Filter by topic</h2>
       <div class="flex flex-wrap gap-2">
         <a 
-          href={`${base}articles`} 
+          href={`${base}articles/`} 
           class="px-3 py-1 text-sm rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
         >
           All
         </a>
         {allTags.map(tag => (
           <a 
-            href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
             class="px-3 py-1 text-sm rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
           >
             {tag}
@@ -50,7 +50,7 @@ const allTags = [...new Set(articles.flatMap(article => article.data.tags))].sor
       ) : (
         sortedArticles.map(article => (
           <article class="border-b border-zinc-200 dark:border-zinc-800 pb-8 last:border-0">
-            <a href={`${base}articles/${article.slug}`} class="group">
+            <a href={`${base}articles/${article.slug}/`} class="group">
               <h2 class="text-2xl font-bold mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
                 {article.data.title}
               </h2>
@@ -75,7 +75,7 @@ const allTags = [...new Set(articles.flatMap(article => article.data.tags))].sor
             <div class="flex flex-wrap gap-2">
               {article.data.tags.map(tag => (
                 <a 
-                  href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
                   class="px-2 py-1 text-xs rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
                 >
                   {tag}

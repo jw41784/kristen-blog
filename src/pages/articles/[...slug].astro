@@ -44,7 +44,7 @@ const { Content } = await article.render();
       <div class="flex flex-wrap gap-2 mb-8">
         {article.data.tags.map(tag => (
           <a 
-            href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
             class="px-3 py-1 text-sm rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
           >
             {tag}
@@ -73,7 +73,7 @@ const { Content } = await article.render();
             Helping senior leaders build organizations where people and performance thrive.
           </p>
           <a 
-            href={`${base}about`} 
+            href={`${base}about/`} 
             class="text-sm text-teal-600 dark:text-teal-400 hover:underline inline-block mt-2"
           >
             More about me →

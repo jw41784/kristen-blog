@@ -33,10 +33,10 @@ const recentArticles = articles
       </p>
       
       <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center not-prose">
-        <a href={`${base}articles`} class="inline-block px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-center">
+        <a href={`${base}articles/`} class="inline-block px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-center">
           Read Articles
         </a>
-        <a href={`${base}about`} class="inline-block px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-teal-600 dark:hover:border-teal-400 transition-colors text-center">
+        <a href={`${base}about/`} class="inline-block px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-teal-600 dark:hover:border-teal-400 transition-colors text-center">
           About Me
         </a>
       </div>
@@ -47,7 +47,7 @@ const recentArticles = articles
       <div class="space-y-6">
         {recentArticles.map(article => (
           <article class="border-b border-zinc-200 dark:border-zinc-800 pb-6 last:border-0">
-            <a href={`${base}articles/${article.slug}`} class="group">
+            <a href={`${base}articles/${article.slug}/`} class="group">
               <h3 class="text-xl font-semibold mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
                 {article.data.title}
               </h3>
@@ -81,7 +81,7 @@ const recentArticles = articles
       </div>
       
       <div class="text-center mt-8">
-        <a href={`${base}articles`} class="inline-block text-teal-600 dark:text-teal-400 hover:underline">
+        <a href={`${base}articles/`} class="inline-block text-teal-600 dark:text-teal-400 hover:underline">
           View all articles →
         </a>
       </div>
