@@ -15,36 +15,56 @@ const recentArticles = articles
 ---
 
 <BaseLayout title="Home">
-  <div class="space-y-8">
-    <header class="text-center py-12">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
-        Hey, I'm Kristen
-      </h1>
-      <p class="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-        I call out workplace BS (professionally) and help organizations actually listen to their people
-      </p>
-    </header>
-    
-    <section class="prose prose-zinc dark:prose-invert mx-auto">
-      <p>
-        Think your culture change initiative is going great? Your engagement scores look amazing? 
-        Your employees are "highly satisfied"? Cool story. Let's talk about what's actually happening 
-        behind those numbers.
+  <div class="space-y-16">
+    <!-- Hero Section with Image -->
+    <header class="py-16">
+      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+        <!-- Text Content -->
+        <div class="flex-1 text-center lg:text-left">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            Hey, I'm Kristen
+          </h1>
+          <p class="text-xl text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
+            I call out workplace BS (professionally) and help organizations actually listen to their people
+          </p>
+          
+          <div class="prose prose-zinc dark:prose-invert text-left mb-8">
+            <p>
+              Think your culture change initiative is going great? Your engagement scores look amazing? 
+              Your employees are "highly satisfied"? Cool story. Let's talk about what's actually happening 
+              behind those numbers.
+            </p>
+            <p>
+              I'm an I/O psychologist who's spent 10+ years watching well-meaning leaders accidentally 
+              create the exact opposite of what they intended. This is where I spill the tea on what 
+              really works (spoiler: it's not more surveys).
+            </p>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 lg:justify-start justify-center">
+            <a href={`${base}articles/`} class="inline-block px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-center">
+              Let's go
+            </a>
+            <a href={`${base}about/`} class="inline-block px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-teal-600 dark:hover:border-teal-400 transition-colors text-center">
+              The backstory
+            </a>
+          </div>
+        </div>
         
-        I'm an I/O psychologist who's spent 10+ years watching well-meaning leaders accidentally 
-        create the exact opposite of what they intended. This is where I spill the tea on what 
-        really works (spoiler: it's not more surveys).
-      </p>
-      
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center not-prose">
-        <a href={`${base}articles/`} class="inline-block px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-center">
-          Let's go
-        </a>
-        <a href={`${base}about/`} class="inline-block px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-teal-600 dark:hover:border-teal-400 transition-colors text-center">
-          The backstory
-        </a>
+        <!-- Image -->
+        <div class="flex-1 lg:flex-none lg:w-96">
+          <div class="relative">
+            <img 
+              src={`${base}homepagepic.jpg`} 
+              alt="Kristen" 
+              class="w-full max-w-md mx-auto lg:max-w-none lg:w-96 h-auto rounded-2xl shadow-2xl object-cover"
+            />
+            <!-- Optional: Add a subtle overlay for dark mode -->
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/10 to-transparent dark:from-black/20"></div>
+          </div>
+        </div>
       </div>
-    </section>
+    </header>
     
     <section class="mt-16">
       <h2 class="text-2xl font-bold mb-6">Latest hot takes</h2>
