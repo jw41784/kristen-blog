@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kristenpsychology.com', // Update with actual domain
+  site: 'https://jw41784.github.io/kristen-blog', // GitHub Pages URL
   vite: {
     plugins: [tailwindcss()]
   },
