@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.ryancarson.com)",
+      "Bash(npm create:*)",
+      "Bash(mv:*)",
+      "Bash(npm install:*)",
+      "Bash(npx astro add:*)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}

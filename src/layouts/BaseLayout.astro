@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = "Dr. Kristen's insights on I/O Psychology, employee listening, and culture transformation", image = '/profile.jpg' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Open Graph / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+    
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <title>{title} | Dr. Kristen - I/O Psychology</title>
+    
+    <script is:inline>
+      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    </script>
+  </head>
+  <body class="min-h-screen bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 transition-colors">
+    <nav class="border-b border-zinc-200 dark:border-zinc-800">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <a href="/" class="font-semibold text-lg hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+            Dr. Kristen
+          </a>
+          <div class="flex items-center space-x-8">
+            <a href="/about" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</a>
+            <a href="/articles" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Articles</a>
+            <a href="/contact" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contact</a>
+            <ThemeToggle client:load />
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <slot />
+    </main>
+    
+    <footer class="border-t border-zinc-200 dark:border-zinc-800 mt-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <p>&copy; {new Date().getFullYear()} Dr. Kristen. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  const uniqueTags = [...new Set(articles.flatMap(article => article.data.tags))];
+  
+  return uniqueTags.map(tag => {
+    const filteredArticles = articles.filter(article => 
+      article.data.tags.includes(tag) && article.data.draft !== true
+    );
+    return {
+      params: { tag: tag.toLowerCase().replace(/\s+/g, '-') },
+      props: { 
+        articles: filteredArticles.sort((a, b) => 
+          b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+        ),
+        originalTag: tag
+      },
+    };
+  });
+}
+
+const { articles, originalTag } = Astro.props;
+---
+
+<BaseLayout title={`Articles tagged "${originalTag}"`}>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+      <a href="/articles" class="text-sm text-teal-600 dark:text-teal-400 hover:underline">← All articles</a>
+      <h1 class="text-4xl font-bold mt-4">Articles tagged "{originalTag}"</h1>
+      <p class="text-zinc-600 dark:text-zinc-400 mt-2">{articles.length} article{articles.length !== 1 ? 's' : ''} found</p>
+    </div>
+    
+    <div class="space-y-8">
+      {articles.map(article => (
+        <article class="border-b border-zinc-200 dark:border-zinc-800 pb-8 last:border-0">
+          <a href={`/articles/${article.slug}`} class="group">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+              {article.data.title}
+            </h2>
+          </a>
+          
+          <div class="flex items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400 mb-3">
+            <time datetime={article.data.publishDate.toISOString()}>
+              {article.data.publishDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+            <span>•</span>
+            <span>{Math.ceil(article.body.split(' ').length / 200)} min read</span>
+          </div>
+          
+          <p class="text-zinc-600 dark:text-zinc-400 mb-4">
+            {article.data.description}
+          </p>
+          
+          <div class="flex flex-wrap gap-2">
+            {article.data.tags.map(tag => (
+              <a 
+                href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                class={`px-2 py-1 text-xs rounded transition-colors ${
+                  tag === originalTag 
+                    ? 'bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300' 
+                    : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900'
+                }`}
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

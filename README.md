@@ -1,47 +1,105 @@
-# Astro Starter Kit: Minimal
+# Dr. Kristen's Blog
 
-```sh
-npm create astro@latest -- --template minimal
+A minimalist blog built with Astro showcasing insights on I/O Psychology, employee listening, and culture transformation.
+
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## 📁 Project Structure
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
+```
 /
 ├── public/
+│   ├── favicon.svg
+│   └── profile.jpg
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/
+│   │   └── ThemeToggle.tsx
+│   ├── content/
+│   │   └── articles/
+│   │       └── welcome-to-my-blog.mdx
+│   ├── layouts/
+│   │   └── BaseLayout.astro
+│   ├── pages/
+│   │   ├── about.astro
+│   │   ├── articles.astro
+│   │   ├── contact.astro
+│   │   ├── index.astro
+│   │   ├── articles/
+│   │   │   └── [...slug].astro
+│   │   └── tags/
+│   │       └── [tag].astro
+│   └── styles/
+│       └── global.css
+└── astro.config.mjs
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## ✍️ Adding New Articles
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. Create a new `.mdx` file in `src/content/articles/`
+2. Add frontmatter with required fields:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```yaml
+---
+title: "Your Article Title"
+description: "A brief description of your article"
+publishDate: 2024-01-20
+tags: ["Leadership", "Culture"]
+draft: false
+---
+```
 
-## 🧞 Commands
+3. Write your content in Markdown/MDX below the frontmatter
 
-All commands are run from the root of the project, from a terminal:
+## 🎨 Features
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- **Dark/Light Theme**: Automatic theme detection with manual toggle
+- **SEO Optimized**: Meta tags, OpenGraph, and sitemap generation
+- **Tag System**: Organize articles by topics
+- **Responsive Design**: Mobile-first approach
+- **Fast Performance**: Static site generation with Astro
+- **MDX Support**: Enhanced markdown with component support
 
-## 👀 Want to learn more?
+## 🚀 Deployment
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### GitHub Pages (Testing)
+```bash
+npm run build
+# Push to GitHub and enable Pages from Settings
+```
+
+### Cloudflare Pages
+1. Connect your GitHub repository to Cloudflare Pages
+2. Set build command: `npm run build`
+3. Set output directory: `dist`
+4. Deploy!
+
+## 📝 Configuration
+
+Update `astro.config.mjs` with your domain:
+```js
+export default defineConfig({
+  site: 'https://your-domain.com',
+  // ...
+});
+```
+
+## 🛠️ Development
+
+- `npm run dev` - Start development server at localhost:4321
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run astro` - Run Astro CLI commands

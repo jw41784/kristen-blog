@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map(article => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+type Props = {
+  article: CollectionEntry<'articles'>;
+};
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+---
+
+<BaseLayout 
+  title={article.data.title}
+  description={article.data.description}
+>
+  <article class="max-w-3xl mx-auto">
+    <!-- Article Header -->
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">{article.data.title}</h1>
+      
+      <div class="flex items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+        <time datetime={article.data.publishDate.toISOString()}>
+          {article.data.publishDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+        <span>•</span>
+        <span>{Math.ceil(article.body.split(' ').length / 200)} min read</span>
+      </div>
+      
+      <div class="flex flex-wrap gap-2 mb-8">
+        {article.data.tags.map(tag => (
+          <a 
+            href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+            class="px-3 py-1 text-sm rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    </header>
+    
+    <!-- Article Content -->
+    <div class="prose prose-zinc dark:prose-invert prose-lg max-w-none">
+      <Content />
+    </div>
+    
+    <!-- Author Bio -->
+    <footer class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+      <div class="flex items-start gap-4">
+        <img 
+          src="/profile.jpg" 
+          alt="Dr. Kristen" 
+          class="w-16 h-16 rounded-full object-cover"
+        />
+        <div>
+          <h3 class="font-semibold">Dr. Kristen</h3>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+            I/O Psychologist specializing in employee listening and culture transformation. 
+            Helping senior leaders build organizations where people and performance thrive.
+          </p>
+          <a 
+            href="/about" 
+            class="text-sm text-teal-600 dark:text-teal-400 hover:underline inline-block mt-2"
+          >
+            Learn more about me →
+          </a>
+        </div>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>

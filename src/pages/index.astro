@@ -1,16 +1,40 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+  <div class="space-y-8">
+    <header class="text-center py-12">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
+        Welcome to Dr. Kristen's Blog
+      </h1>
+      <p class="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+        Exploring the intersection of organizational psychology, employee experience, and culture transformation
+      </p>
+    </header>
+    
+    <section class="prose prose-zinc dark:prose-invert mx-auto">
+      <p>
+        With over a decade of experience in Industrial-Organizational Psychology, I help senior leaders 
+        navigate the complex landscape of workplace culture and employee engagement. This blog is where 
+        I share insights, observations, and practical wisdom from the field.
+      </p>
+      
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center not-prose">
+        <a href="/articles" class="inline-block px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-center">
+          Read Articles
+        </a>
+        <a href="/about" class="inline-block px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-teal-600 dark:hover:border-teal-400 transition-colors text-center">
+          Learn More About Me
+        </a>
+      </div>
+    </section>
+    
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold mb-6">Recent Articles</h2>
+      <div class="space-y-6">
+        <p class="text-zinc-600 dark:text-zinc-400">Articles coming soon...</p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
