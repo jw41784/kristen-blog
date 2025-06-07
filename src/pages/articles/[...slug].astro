@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+const base = import.meta.env.BASE_URL;
+
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
   return articles.map(article => ({
@@ -42,7 +44,7 @@ const { Content } = await article.render();
       <div class="flex flex-wrap gap-2 mb-8">
         {article.data.tags.map(tag => (
           <a 
-            href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
             class="px-3 py-1 text-sm rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
           >
             {tag}
@@ -60,7 +62,7 @@ const { Content } = await article.render();
     <footer class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800">
       <div class="flex items-start gap-4">
         <img 
-          src="/profile.jpg" 
+          src={`${base}profile.jpg`} 
           alt="Dr. Kristen" 
           class="w-16 h-16 rounded-full object-cover"
         />
@@ -71,7 +73,7 @@ const { Content } = await article.render();
             Helping senior leaders build organizations where people and performance thrive.
           </p>
           <a 
-            href="/about" 
+            href={`${base}about`} 
             class="text-sm text-teal-600 dark:text-teal-400 hover:underline inline-block mt-2"
           >
             Learn more about me →
