@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jw41784.github.io',
-  base: '/kristen-blog',
+  base: '/kristen-blog/',
   vite: {
     plugins: [tailwindcss()]
   },
