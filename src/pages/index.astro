@@ -18,32 +18,36 @@ const recentArticles = articles
   <div class="space-y-8">
     <header class="text-center py-12">
       <h1 class="text-4xl sm:text-5xl font-bold mb-4">
-        Welcome to Kristen's Blog
+        Hey, I'm Kristen 👋
       </h1>
       <p class="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-        Insights on organizational psychology, employee listening, and culture transformation
+        I call out workplace BS (professionally) and help organizations actually listen to their people
       </p>
     </header>
     
     <section class="prose prose-zinc dark:prose-invert mx-auto">
       <p>
-        I'm an I/O psychologist who helps organizations build cultures where people thrive. 
-        This is where I share what I'm seeing in the field—the patterns, challenges, and 
-        practical insights that matter for leaders trying to create better workplaces.
+        Think your culture change initiative is going great? Your engagement scores look amazing? 
+        Your employees are "highly satisfied"? Cool story. Let's talk about what's actually happening 
+        behind those numbers.
+        
+        I'm an I/O psychologist who's spent 10+ years watching well-meaning leaders accidentally 
+        create the exact opposite of what they intended. This is where I spill the tea on what 
+        really works (spoiler: it's not more surveys).
       </p>
       
       <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center not-prose">
         <a href={`${base}articles/`} class="inline-block px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-center">
-          Read Articles
+          Let's go 🚀
         </a>
         <a href={`${base}about/`} class="inline-block px-6 py-3 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-teal-600 dark:hover:border-teal-400 transition-colors text-center">
-          About Me
+          The backstory
         </a>
       </div>
     </section>
     
     <section class="mt-16">
-      <h2 class="text-2xl font-bold mb-6">Recent Articles</h2>
+      <h2 class="text-2xl font-bold mb-6">Latest hot takes 🔥</h2>
       <div class="space-y-6">
         {recentArticles.map(article => (
           <article class="border-b border-zinc-200 dark:border-zinc-800 pb-6 last:border-0">
@@ -82,7 +86,7 @@ const recentArticles = articles
       
       <div class="text-center mt-8">
         <a href={`${base}articles/`} class="inline-block text-teal-600 dark:text-teal-400 hover:underline">
-          View all articles →
+          Read all the things →
         </a>
       </div>
     </section>

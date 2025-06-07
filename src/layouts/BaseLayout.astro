@@ -8,7 +8,7 @@ export interface Props {
   image?: string;
 }
 
-const { title, description = "Kristen's insights on I/O Psychology, employee listening, and culture transformation", image = '/profile.jpg' } = Astro.props;
+const { title, description = "I call out workplace BS (professionally) and help organizations actually listen to their people", image = '/profile.jpg' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL;
 ---
