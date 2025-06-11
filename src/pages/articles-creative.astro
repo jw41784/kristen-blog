@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const articles = await getCollection('articles', ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedArticles = articles.sort((a, b) => 
+  b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+// Get all unique tags
+const allTags = [...new Set(articles.flatMap(article => article.data.tags))].sort();
+
+// Calculate featured article (most recent)
+const featuredArticle = sortedArticles[0];
+const otherArticles = sortedArticles.slice(1);
+---
+
+<BaseLayout title="Articles">
+  <div class="max-w-7xl mx-auto px-4 -mt-12">
+    <!-- Header with background -->
+    <header class="relative py-16 mb-12 overflow-hidden rounded-3xl">
+      <div class="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-800 dark:from-teal-900 dark:to-zinc-900"></div>
+      <div class="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
+      
+      <div class="relative z-10 text-center">
+        <h1 class="text-5xl lg:text-6xl font-bold text-white mb-4">
+          All the <span class="text-yellow-300">hot takes</span>
+        </h1>
+        <p class="text-xl text-teal-100 max-w-2xl mx-auto">
+          Where I spill the tea on workplace culture, leadership fails, and what actually works
+        </p>
+      </div>
+    </header>
+    
+    <!-- Tag Cloud -->
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-semibold">Explore topics</h2>
+        <a 
+          href={`${base}articles/`} 
+          class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400"
+        >
+          Clear filters
+        </a>
+      </div>
+      
+      <div class="flex flex-wrap gap-3">
+        {allTags.map((tag, index) => (
+          <a 
+            href={`${base}tags/${tag.toLowerCase().replace(/\s+/g, '-')}/`}
+            class={`
+              px-4 py-2 rounded-full font-medium transition-all
+              ${index % 4 === 0 ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-300 hover:bg-teal-200 dark:hover:bg-teal-900/50' : ''}
+              ${index % 4 === 1 ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900/50' : ''}
+              ${index % 4 === 2 ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-900/50' : ''}
+              ${index % 4 === 3 ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900/50' : ''}
+              transform hover:scale-105 hover:shadow-lg
+            `}
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    </div>
+    
+    {sortedArticles.length === 0 ? (
+      <div class="text-center py-24">
+        <p class="text-xl text-zinc-600 dark:text-zinc-400">No articles yet. Something big is coming...</p>
+      </div>
+    ) : (
+      <div class="space-y-16">
+        {/* Featured Article */}
+        {featuredArticle && (
+          <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+              <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+              Latest
+            </h2>
+            
+            <article class="group">
+              <a href={`${base}articles/${featuredArticle.slug}/`} class="block">
+                <div class="relative bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 rounded-3xl p-8 lg:p-12 overflow-hidden transition-all hover:shadow-2xl">
+                  <!-- Decorative elements -->
+                  <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+                  <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-amber-500/20 to-rose-500/20 rounded-full blur-2xl"></div>
+                  
+                  <div class="relative z-10 grid lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-8">
+                      <div class="flex items-center gap-4 mb-4">
+                        <span class="px-3 py-1 text-xs font-bold bg-gradient-to-r from-teal-600 to-purple-600 text-white rounded-full">
+                          NEW
+                        </span>
+                        <time class="text-sm text-zinc-600 dark:text-zinc-400" datetime={featuredArticle.data.publishDate.toISOString()}>
+                          {featuredArticle.data.publishDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </time>
+                      </div>
+                      
+                      <h3 class="text-3xl lg:text-4xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-teal-600 group-hover:to-purple-600 transition-all">
+                        {featuredArticle.data.title}
+                      </h3>
+                      
+                      <p class="text-lg text-zinc-600 dark:text-zinc-400 mb-6 leading-relaxed">
+                        {featuredArticle.data.description}
+                      </p>
+                      
+                      <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                          {featuredArticle.data.tags.map(tag => (
+                            <span class="px-3 py-1 text-sm rounded-full bg-white/50 dark:bg-black/20 backdrop-blur-sm">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <span class="text-teal-600 dark:text-teal-400 font-bold text-lg group-hover:translate-x-2 inline-block transition-transform">
+                          Read →
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div class="lg:col-span-4 text-center">
+                      <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-teal-500 to-purple-600 text-white">
+                        <span class="text-3xl font-bold">{Math.ceil(featuredArticle.body.split(' ').length / 200)}</span>
+                        <span class="text-sm ml-1">min</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </article>
+          </section>
+        )}
+        
+        {/* Other Articles Grid */}
+        {otherArticles.length > 0 && (
+          <section>
+            <h2 class="text-2xl font-bold mb-6">Previous articles</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {otherArticles.map((article, index) => (
+                <article class="group h-full">
+                  <a href={`${base}articles/${article.slug}/`} class="flex flex-col h-full">
+                    <div class={`
+                      flex-1 rounded-2xl p-6 transition-all hover:shadow-xl
+                      ${index % 6 === 0 || index % 6 === 3 ? 'bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/20 dark:to-teal-800/20 border border-teal-200 dark:border-teal-800' : ''}
+                      ${index % 6 === 1 || index % 6 === 4 ? 'bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border border-purple-200 dark:border-purple-800' : ''}
+                      ${index % 6 === 2 || index % 6 === 5 ? 'bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 border border-amber-200 dark:border-amber-800' : ''}
+                    `}>
+                      <div class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 mb-3">
+                        <time datetime={article.data.publishDate.toISOString()}>
+                          {article.data.publishDate.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </time>
+                        <span>•</span>
+                        <span>{Math.ceil(article.body.split(' ').length / 200)} min</span>
+                      </div>
+                      
+                      <h3 class="text-xl font-bold mb-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors line-clamp-2">
+                        {article.data.title}
+                      </h3>
+                      
+                      <p class="text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-3 flex-1">
+                        {article.data.description}
+                      </p>
+                      
+                      <div class="flex flex-wrap gap-2 mt-auto">
+                        {article.data.tags.slice(0, 2).map(tag => (
+                          <span class="px-2 py-1 text-xs rounded bg-white/60 dark:bg-black/20">
+                            {tag}
+                          </span>
+                        ))}
+                        {article.data.tags.length > 2 && (
+                          <span class="px-2 py-1 text-xs rounded bg-white/60 dark:bg-black/20">
+                            +{article.data.tags.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    )}
+  </div>
+  
+  <style>
+    .bg-grid-white\/10 {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 35px,
+        rgba(255, 255, 255, 0.1) 35px,
+        rgba(255, 255, 255, 0.1) 70px
+      );
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,221 @@
+---
+import '../styles/global.css';
+import '../styles/animations.css';
+import ThemeToggle from '../components/ThemeToggle';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = "I call out workplace BS (professionally) and help organizations actually listen to their people", image = '/profile.jpg' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Open Graph / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+    
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <title>{title} | Kristen's Blog</title>
+    
+    <script is:inline>
+      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    </script>
+  </head>
+  <body class="min-h-screen bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 transition-colors overflow-x-hidden">
+    <!-- Animated background elements -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-teal-300/20 dark:bg-teal-600/10 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-300/20 dark:bg-purple-600/10 rounded-full blur-3xl animate-float-reverse"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-yellow-300/10 to-rose-300/10 dark:from-yellow-600/5 dark:to-rose-600/5 rounded-full blur-3xl animate-blob"></div>
+    </div>
+    
+    <!-- Sticky Navigation -->
+    <nav class="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-zinc-900/80 border-b border-zinc-200/50 dark:border-zinc-800/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <a href={base} class="group flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-700 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+              <span class="text-white font-bold text-xl">K</span>
+            </div>
+            <span class="font-semibold text-lg hidden sm:block">Kristen</span>
+          </a>
+          
+          <div class="flex items-center">
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-1">
+              <a href={`${base}about/`} class="px-4 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                About
+              </a>
+              <a href={`${base}articles/`} class="px-4 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                Articles
+              </a>
+              <a href={`${base}contact/`} class="px-4 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                Contact
+              </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800" id="mobile-menu-button">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+            
+            <div class="ml-4 pl-4 border-l border-zinc-200 dark:border-zinc-800">
+              <ThemeToggle client:load />
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile Navigation -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 border-t border-zinc-200 dark:border-zinc-800">
+          <a href={`${base}about/`} class="block px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">
+            About
+          </a>
+          <a href={`${base}articles/`} class="block px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">
+            Articles
+          </a>
+          <a href={`${base}contact/`} class="block px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800">
+            Contact
+          </a>
+        </div>
+      </div>
+    </nav>
+    
+    <main>
+      <slot />
+    </main>
+    
+    <!-- Creative Footer -->
+    <footer class="relative mt-32 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-zinc-900 to-zinc-800 dark:from-zinc-950 dark:to-zinc-900"></div>
+      <div class="absolute inset-0 bg-grid-white/5 [mask-image:radial-gradient(ellipse_at_bottom,transparent_20%,black)]"></div>
+      
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+          <!-- Brand -->
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-700 rounded-xl flex items-center justify-center">
+                <span class="text-white font-bold text-2xl">K</span>
+              </div>
+              <span class="text-white font-bold text-xl">Kristen</span>
+            </div>
+            <p class="text-zinc-400 text-sm">
+              Calling out workplace BS (professionally) since forever.
+            </p>
+          </div>
+          
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href={`${base}articles/`} class="text-zinc-400 hover:text-teal-400 transition-colors">Articles</a></li>
+              <li><a href={`${base}about/`} class="text-zinc-400 hover:text-teal-400 transition-colors">About</a></li>
+              <li><a href={`${base}contact/`} class="text-zinc-400 hover:text-teal-400 transition-colors">Contact</a></li>
+            </ul>
+          </div>
+          
+          <!-- Newsletter -->
+          <div>
+            <h3 class="text-white font-semibold mb-4">Stay Updated</h3>
+            <p class="text-zinc-400 text-sm mb-4">
+              Get the latest hot takes delivered to your inbox.
+            </p>
+            <div class="flex gap-2">
+              <input 
+                type="email" 
+                placeholder="your@email.com" 
+                class="flex-1 px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-teal-500"
+              />
+              <button class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="border-t border-zinc-800 pt-8 text-center">
+          <p class="text-zinc-400 text-sm">
+            &copy; {new Date().getFullYear()} Kristen. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+    
+    <script>
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuButton?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
+      });
+      
+      // Scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+      });
+      
+      // Parallax effect
+      let scrollY = 0;
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+        document.documentElement.style.setProperty('--scroll-y', scrollY);
+      });
+    </script>
+    
+    <style>
+      .bg-grid-white\/5 {
+        background-image: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 35px,
+          rgba(255, 255, 255, 0.05) 35px,
+          rgba(255, 255, 255, 0.05) 70px
+        );
+      }
+    </style>
+  </body>
+</html>
