@@ -17,6 +17,9 @@ Kristen's Blog is a modern, engaging blog for an I/O psychologist specializing i
 - **Content management** with MDX and content collections
 - **Tag-based filtering** for articles
 - **Engaging copy** with conversational tone
+- **Creative layout design** with asymmetric hero, diagonal sections, and animations
+- **Magazine-style article grid** with featured post highlighting
+- **Enhanced visual hierarchy** with gradient effects and micro-interactions
 
 ### 🌐 Live URLs
 - **Production**: https://jw41784.github.io/kristen-blog/
@@ -98,21 +101,28 @@ draft: false
 - **Borders**: Zinc-200 (light) / Zinc-800 (dark)
 
 ### Layout
-- **Max width**: 4xl (56rem) for main content
+- **Max width**: 4xl (56rem) for main content, 6xl for creative layouts
 - **Prose**: Optimized for readability with generous line height
 - **Navigation**: Simple horizontal menu with theme toggle
+- **Hero Section**: Asymmetric design with diagonal backgrounds, rotated cards
+- **Article Grid**: Magazine-style layout with featured posts
+- **Animations**: Floating elements, hover transforms, gradient text effects
 
 ## File Structure Guide
 
 ### Key Files to Know
 - **`src/layouts/BaseLayout.astro`** - Main layout with nav/footer
-- **`src/pages/index.astro`** - Home page with recent articles
+- **`src/layouts/CreativeLayout.astro`** - Enhanced layout with animations (for future use)
+- **`src/pages/index.astro`** - Home page with creative asymmetric design
+- **`src/pages/articles.astro`** - Articles listing page
+- **`src/styles/animations.css`** - Animation library for micro-interactions
 - **`src/content/articles/`** - All blog posts in MDX format
 - **`src/content.config.ts`** - Content collection schema
 - **`astro.config.mjs`** - Main configuration with base path
 
 ### Image Management
 - **Profile photo**: `public/profile.jpg` - Kristen's headshot
+- **Homepage hero**: `public/homepagepic.jpg` - Hero section image
 - **Favicon**: `public/favicon.svg` - Custom "K" design
 - **All images** automatically copied to dist and optimized
 
