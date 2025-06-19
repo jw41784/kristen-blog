@@ -18,7 +18,10 @@
       "Bash(git push:*)",
       "Bash(ls:*)",
       "Bash(curl:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(pip install:*)",
+      "Bash(python3 -m pip install:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
